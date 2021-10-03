@@ -5,7 +5,7 @@ import logo from "../jwt.svg";
 const Header = () => {
   const { userInfo } = useSelector((store) => store);
 
-  const menuElements = userInfo?.name ? (
+  const menuElements = userInfo?.nameName ? (
     <ul className="navbar-nav">
       <li key="active" className="nav-item align-self-end">
         <a href="/?status=active" className="nav-link active">Active</a>
