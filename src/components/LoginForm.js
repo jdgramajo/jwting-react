@@ -4,6 +4,14 @@ const LoginForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  // TODO:
+  // - Create service file that provides backend use.
+  // - Get user data when user credentials are submitted.
+  // - Update user information in global state when successful.
+  // - Change application layout to display user info and options.
+  // - Options should be: logout and, change pwd.
+  // - Plan the two above, moving todo items where it makes sense.
+
   const changeStoreIfInputIsValid = (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
