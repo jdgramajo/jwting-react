@@ -1,25 +1,26 @@
 import { useState } from "react";
 
 const LoginForm = () => {
-  // TODOs:
-  // - Handle input for username and password the Redact way.
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  const changeStore = (event) => {
+  const changeStoreIfInputIsValid = (event) => {
     event.preventDefault();
-    const userName = document.getElementById("user-input").value;
-    const password = document.getElementById("password-input").value;
+    const loginForm = document.getElementById("login-form");
 
-    setUserName(userName);
-    setPassword(password);
-    console.log(userName, password);
+    if (!loginForm.checkValidity()) {
+      loginForm.classList.add("was-validated");
+    } else {
+      const userName = document.getElementById("user-input").value;
+      const password = document.getElementById("password-input").value;
+      setUserName(userName);
+      setPassword(password);
+      console.log(userName, password);
+    }
   };
-  // - Validate form the React way.
-  // - Insert info. and pwd. into application state.
 
   return (
-    <div className="container col-12 col-sm-10 col-md-9 col-lg-8 col-xl-6 col-xxl-4">
+    <div className="container col-lg-8 col-xl-6 col-xxl-4">
       <div>
         <div className="card p-5">
           <form id="login-form" noValidate={true}>
@@ -54,7 +55,7 @@ const LoginForm = () => {
                   id="submit-button"
                   type="submit"
                   className="btn btn-lg btn-outline-success w-50"
-                  onClick={changeStore}
+                  onClick={changeStoreIfInputIsValid}
                 >
                   Ingresar
                 </button>
