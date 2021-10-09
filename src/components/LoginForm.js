@@ -1,8 +1,9 @@
 import { useState } from "react";
 
+import { postCredentials } from "../services/jwtingService";
+
 const LoginForm = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [userInfo, setUserInfo] = useState({});
 
   // TODO:
   // - Create service file that provides backend use.
@@ -12,7 +13,7 @@ const LoginForm = () => {
   // - Options should be: logout and, change pwd.
   // - Plan the two above, moving todo items where it makes sense.
 
-  const changeStoreIfInputIsValid = (event) => {
+  const submitCredentialsIfValid = (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
 
@@ -21,9 +22,9 @@ const LoginForm = () => {
     } else {
       const userName = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
-      setUserName(userName);
-      setPassword(password);
-      console.log(userName, password);
+      const authResponse = postCredentials(userName, password);
+      setUserInfo(authResponse);
+      console.log(JSON.stringify(authResponse));
     }
   };
 
@@ -41,7 +42,7 @@ const LoginForm = () => {
                   placeholder="Usuario"
                   className="form-control"
                   required={true}
-                  defaultValue={userName}
+                  defaultValue=""
                 />
                 <label htmlFor="user-input">Usuario</label>
                 <div className="invalid-feedback">Usuario es requerido.</div>
@@ -53,7 +54,7 @@ const LoginForm = () => {
                   placeholder="Contraseña"
                   className="form-control"
                   required={true}
-                  defaultValue={password}
+                  defaultValue=""
                 />
                 <label htmlFor="user-input">Contraseña</label>
                 <div className="invalid-feedback">Contraseña es requerida.</div>
@@ -63,7 +64,7 @@ const LoginForm = () => {
                   id="submit-button"
                   type="submit"
                   className="btn btn-lg btn-outline-success w-50"
-                  onClick={changeStoreIfInputIsValid}
+                  onClick={submitCredentialsIfValid}
                 >
                   Ingresar
                 </button>
