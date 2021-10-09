@@ -1,13 +1,8 @@
-import { useState } from "react";
-
 import { postCredentials } from "../services/jwtingService";
 
 const LoginForm = () => {
-  const [userInfo, setUserInfo] = useState({});
-
   // TODO:
-  // - Upon successful login, navigate to other component using a router.
-  // - Create the receiving component.
+  // - Upon successful login, navigate to main, with React Router.
 
   const submitCredentialsIfValid = async (event) => {
     event.preventDefault();
@@ -19,9 +14,7 @@ const LoginForm = () => {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
       try {
-        const authResponse = await postCredentials(username, password);
-        setUserInfo(authResponse);
-        console.log(JSON.stringify(authResponse));
+        return await postCredentials(username, password);
       } catch (err) {
         console.log(err);
         return;
