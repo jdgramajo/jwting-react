@@ -1,8 +1,17 @@
+import { useHistory } from "react-router-dom";
+
 import { postCredentials } from "../services/jwtingService";
 
 const LoginForm = () => {
-  // TODO:
-  // - Upon successful login, navigate to main, with React Router.
+	const history = useHistory();
+
+  const navigateToMain = () => {
+		history.push("/main");
+	};
+
+  const navigateToError = () => {
+		history.push("/error");
+	};
 
   const submitCredentialsIfValid = async (event) => {
     event.preventDefault();
@@ -14,10 +23,17 @@ const LoginForm = () => {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
       try {
-        return await postCredentials(username, password);
+        const result = await postCredentials(username, password);
+				if (result?.ok) {
+					// TODO:
+					// - After navigation, get the user info to display.
+				  navigateToMain();
+				} else {
+					navigateToError();
+				};
       } catch (err) {
         console.log(err);
-        return;
+				navigateToError();
       }
     }
   };
