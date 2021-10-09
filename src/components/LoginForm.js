@@ -6,25 +6,26 @@ const LoginForm = () => {
   const [userInfo, setUserInfo] = useState({});
 
   // TODO:
-  // - Create service file that provides backend use.
-  // - Get user data when user credentials are submitted.
-  // - Update user information in global state when successful.
-  // - Change application layout to display user info and options.
-  // - Options should be: logout and, change pwd.
-  // - Plan the two above, moving todo items where it makes sense.
+  // - Upon successful login, navigate to other component using a router.
+  // - Create the receiving component.
 
-  const submitCredentialsIfValid = (event) => {
+  const submitCredentialsIfValid = async (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
 
     if (!loginForm.checkValidity()) {
       loginForm.classList.add("was-validated");
     } else {
-      const userName = document.getElementById("user-input").value;
+      const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
-      const authResponse = postCredentials(userName, password);
-      setUserInfo(authResponse);
-      console.log(JSON.stringify(authResponse));
+      try {
+        const authResponse = await postCredentials(username, password);
+        setUserInfo(authResponse);
+        console.log(JSON.stringify(authResponse));
+      } catch (err) {
+        console.log(err);
+        return;
+      }
     }
   };
 

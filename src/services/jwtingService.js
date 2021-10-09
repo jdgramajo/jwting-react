@@ -1,16 +1,18 @@
-// TODO:
-// - Fetch the token from the backend
-// - Store client info globally
+const backendRootURL = "https://jwting.herokuapp.com:443"; // "http://localhost:8081"; //
 
-const postCredentials = (userName, password) => {
-  console.log(
-    `Should send POST request with: { userName: ${userName}, password: ${password} }`
-  );
-
-  return {
-    userName: userName,
-    roles: ["jwting-guest"],
+const postCredentials = async (username, password) => {
+  const url = `${backendRootURL}/auth/signin`;
+  const init = {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify({ username, password }),
+    headers: {
+      Accept: "*/*",
+      "Content-type": "application/json; charset=UTF-8",
+    },
   };
+
+  return await fetch(url, init);
 };
 
 export { postCredentials };
