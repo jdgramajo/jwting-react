@@ -1,4 +1,4 @@
-const backendRootURL = "https://jwting.herokuapp.com:443"; // "http://localhost:8081"; //
+const backendRootURL = "https://jwting.herokuapp.com:443";
 
 const postCredentials = async (username, password) => {
   const url = `${backendRootURL}/auth/signin`;
@@ -15,4 +15,11 @@ const postCredentials = async (username, password) => {
   return await fetch(url, init);
 };
 
-export { postCredentials };
+const getMyRolesRequest = async () => {
+  const url = `${backendRootURL}/myRoles`;
+  const init = { credentials: "include" };
+
+  return await fetch(url, init);
+};
+
+export { postCredentials, getMyRolesRequest };

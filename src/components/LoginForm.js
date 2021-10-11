@@ -1,17 +1,20 @@
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { postCredentials } from "../services/jwtingService";
+import { changeUserInfo } from "../store";
 
 const LoginForm = () => {
-	const history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const navigateToMain = () => {
-		history.push("/main");
-	};
+    history.push("/main");
+  };
 
   const navigateToError = () => {
-		history.push("/error");
-	};
+    history.push("/error");
+  };
 
   const submitCredentialsIfValid = async (event) => {
     event.preventDefault();
@@ -24,16 +27,15 @@ const LoginForm = () => {
       const password = document.getElementById("password-input").value;
       try {
         const result = await postCredentials(username, password);
-				if (result?.ok) {
-					// TODO:
-					// - After navigation, get the user info to display.
-				  navigateToMain();
-				} else {
-					navigateToError();
-				};
+        if (result?.ok) {
+          dispatch(changeUserInfo({ username }));
+          navigateToMain();
+        } else {
+          navigateToError();
+        }
       } catch (err) {
         console.log(err);
-				navigateToError();
+        navigateToError();
       }
     }
   };
