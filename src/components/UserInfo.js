@@ -6,16 +6,11 @@ import { changeUserInfo } from "../store";
 
 const UserInfo = () => {
   // TODO:
-  // - Store the above in the global state.
-  // - Use a service to fetch user data, role, name, the works.
-  const dispatch = useDispatch();
-  const { userInfo } = useSelector((store) => store);
-  const { roles } = getMyRolesRequest();
-  dispatch(changeUserInfo({ roles }));
-  // console.log(userInfo);
+  // - Change to RTK Query to handle all backend requests and caching.
   // - Redirect to root directory if not logged in (no userInfo available).
   // - Add logout to the header and actually remove cookie (if possible).
-  // - Add change password to the header and navigate to a new component to do so.
+  // - Add change password to the header option and navigate to a new component to do so.
+  const { userInfo } = useSelector((store) => store);
 
   return (
     <div>

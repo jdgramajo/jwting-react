@@ -31,6 +31,8 @@ const LoginForm = () => {
           dispatch(changeUserInfo({ username }));
           navigateToMain();
         } else {
+          // TODO:
+          // - Handle non ok status in response.
           navigateToError();
         }
       } catch (err) {
