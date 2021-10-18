@@ -1,22 +1,14 @@
-const backendRootURL = "https://jwting.herokuapp.com:443";
+// TODO:
+// - Move posting credentials to either calling it from an
+//   RTK Query provided hoook (which means maybe deprecating
+//   this service), or adapting it here some other way.
+import { useLoginMutation } from "../store";
 
-const postCredentials = async (username, password) => {
-  const url = `${backendRootURL}/auth/signin`;
-  const init = {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify({ username, password }),
-    headers: {
-      Accept: "*/*",
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  };
-
-  return await fetch(url, init);
-};
+const postCredentials = (username, password) =>
+  useLoginMutation({ username, password });
 
 const getMyRolesRequest = async () => {
-  const url = `${backendRootURL}/myRoles`;
+  const url = "https://jwting.herokuapp.com:443/myRoles";
   const init = { credentials: "include" };
 
   return await fetch(url, init);

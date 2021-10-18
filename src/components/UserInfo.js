@@ -6,7 +6,6 @@ import { changeUserInfo } from "../store";
 
 const UserInfo = () => {
   // TODO:
-  // - Change to RTK Query to handle all backend requests and caching.
   // - Redirect to root directory if not logged in (no userInfo available).
   // - Add logout to the header and actually remove cookie (if possible).
   // - Add change password to the header option and navigate to a new component to do so.

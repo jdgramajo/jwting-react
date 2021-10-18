@@ -1,12 +1,15 @@
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
-import { postCredentials } from "../services/jwtingService";
-import { changeUserInfo } from "../store";
+// TODO:
+// - Find out if custom hook is necesary or of the useQuery hook
+//   provided by RTK Query is enough.
+// import { changeUserInfo } from "../store";
+import { useSelector, useDispatch } from "react-redux";
 
 const LoginForm = () => {
-  const history = useHistory();
+  const { changeUserInfo } = useSelector((store) => store);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const navigateToMain = () => {
     history.push("/main");
@@ -16,7 +19,7 @@ const LoginForm = () => {
     history.push("/error");
   };
 
-  const submitCredentialsIfValid = async (event) => {
+  const submitCredentialsIfValid = (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
 
@@ -25,20 +28,7 @@ const LoginForm = () => {
     } else {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
-      try {
-        const result = await postCredentials(username, password);
-        if (result?.ok) {
-          dispatch(changeUserInfo({ username }));
-          navigateToMain();
-        } else {
-          // TODO:
-          // - Handle non ok status in response.
-          navigateToError();
-        }
-      } catch (err) {
-        console.log(err);
-        navigateToError();
-      }
+      dispatch(changeUserInfo({ username, password }));
     }
   };
 
