@@ -2,14 +2,17 @@ import { useHistory } from "react-router-dom";
 
 // TODO:
 // - Find out if custom hook is necesary or of the useQuery hook
-//   provided by RTK Query is enough.
+//   provided by RTK Query is enough. -> Seems it isn't, maybe custom
+//   hooks?
 // import { changeUserInfo } from "../store";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
+import { useLoginMutation } from "../store";
 
 const LoginForm = () => {
-  const { changeUserInfo } = useSelector((store) => store);
-  const dispatch = useDispatch();
+  // const { changeUserInfo } = useSelector((store) => store);
+  // const dispatch = useDispatch();
   const history = useHistory();
+  const [login, loginResponse] = useLoginMutation();
 
   const navigateToMain = () => {
     history.push("/main");
@@ -19,7 +22,7 @@ const LoginForm = () => {
     history.push("/error");
   };
 
-  const submitCredentialsIfValid = (event) => {
+  const submitCredentialsIfValid = async (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
 
@@ -28,7 +31,16 @@ const LoginForm = () => {
     } else {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
-      dispatch(changeUserInfo({ username, password }));
+      try {
+        const response = await login({ username, password });
+        console.log(response);
+        navigateToMain();
+        // return response;
+      } catch (err) {
+        console.log(err);
+        navigateToError();
+        return;
+      }
     }
   };
 
