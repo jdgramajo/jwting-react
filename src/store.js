@@ -10,14 +10,14 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const jwtingBackend = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://jwting.herokuapp.com:443",
-    prepareHeaders: (headers, { getState }) => {
-      // By default, if we have a token in the store, let's use that for authenticated requests
-      const token = getState().auth.token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
+    // prepareHeaders: (headers, { getState }) => {
+    //   // By default, if we have a token in the store, let's use that for authenticated requests
+    //   const token = getState().auth.token;
+    //   if (token) {
+    //     headers.set("authorization", `Bearer ${token}`);
+    //   }
+    //   return headers;
+    // },
   }),
   tagTypes: ["UserInfo"],
   endpoints: (builder) => ({
@@ -28,7 +28,7 @@ const jwtingBackend = createApi({
         body: credentials,
       }),
       // Pick out data and prevent nested properties in a hook or selector
-      transformResponse: (response) => response.data,
+      // transformResponse: (response) => response.unwrap,
       invalidatesTags: ["UserInfo"],
       // onQueryStarted is useful for optimistic updates
       // The 2nd parameter is the destructured `MutationLifecycleApi`

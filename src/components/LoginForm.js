@@ -15,7 +15,8 @@ const LoginForm = () => {
   const [login, loginResponse] = useLoginMutation();
 
   const navigateToMain = () => {
-    history.push("/main");
+    // history.push("/main");
+    console.log(loginResponse);
   };
 
   const navigateToError = () => {
@@ -32,10 +33,9 @@ const LoginForm = () => {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
       try {
-        const response = await login({ username, password });
-        console.log(response);
+        login({ username, password });
         navigateToMain();
-        // return response;
+        return loginResponse;
       } catch (err) {
         console.log(err);
         navigateToError();
@@ -87,6 +87,7 @@ const LoginForm = () => {
               </div>
             </div>
           </form>
+          <div>{JSON.stringify(loginResponse)}</div>
         </div>
       </div>
     </div>

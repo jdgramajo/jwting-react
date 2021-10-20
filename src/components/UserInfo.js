@@ -13,7 +13,7 @@ const UserInfo = () => {
   return (
     <div>
       <div className="text-body display-2">
-        Hi {loginResponse.status}! Your roles are:
+        Hi {JSON.stringify(loginResponse)}! Your roles are:
       </div>
       <ul className="text-body display-3"></ul>
     </div>
