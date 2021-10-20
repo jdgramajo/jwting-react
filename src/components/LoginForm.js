@@ -27,7 +27,8 @@ const LoginForm = () => {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
       try {
-        await login({ username, password });
+        // Calling unwrap does throw for gte 400 status codes.
+        await login({ username, password }).unwrap();
         dispatch(changeUserInfo(username));
         navigateToMain(username);
         return loginResponse;
