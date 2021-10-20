@@ -4,19 +4,19 @@ import { useHistory } from "react-router-dom";
 // - Find out if custom hook is necesary or of the useQuery hook
 //   provided by RTK Query is enough. -> Seems it isn't, maybe custom
 //   hooks?
-// import { changeUserInfo } from "../store";
-// import { useSelector, useDispatch } from "react-redux";
+import { changeUserInfo } from "../store";
+import { useSelector, useDispatch } from "react-redux";
 import { useLoginMutation } from "../store";
 
 const LoginForm = () => {
-  // const { changeUserInfo } = useSelector((store) => store);
-  // const dispatch = useDispatch();
+  const { userInfo } = useSelector((store) => store);
+  const dispatch = useDispatch();
   const history = useHistory();
   const [login, loginResponse] = useLoginMutation();
 
-  const navigateToMain = () => {
+  const navigateToMain = (username) => {
     // history.push("/main");
-    console.log(loginResponse);
+    dispatch(changeUserInfo(username));
   };
 
   const navigateToError = () => {
@@ -33,8 +33,8 @@ const LoginForm = () => {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
       try {
-        login({ username, password });
-        navigateToMain();
+        const response = await login({ username, password });
+        navigateToMain(username);
         return loginResponse;
       } catch (err) {
         console.log(err);
@@ -88,6 +88,7 @@ const LoginForm = () => {
             </div>
           </form>
           <div>{JSON.stringify(loginResponse)}</div>
+          <div>{JSON.stringify(userInfo)}</div>
         </div>
       </div>
     </div>
