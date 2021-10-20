@@ -1,22 +1,16 @@
 import { useHistory } from "react-router-dom";
 
-// TODO:
-// - Find out if custom hook is necesary or of the useQuery hook
-//   provided by RTK Query is enough. -> Seems it isn't, maybe custom
-//   hooks?
 import { changeUserInfo } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useLoginMutation } from "../store";
 
 const LoginForm = () => {
-  const { userInfo } = useSelector((store) => store);
   const dispatch = useDispatch();
   const history = useHistory();
   const [login, loginResponse] = useLoginMutation();
 
   const navigateToMain = (username) => {
-    // history.push("/main");
-    dispatch(changeUserInfo(username));
+    history.push("/main");
   };
 
   const navigateToError = () => {
@@ -33,7 +27,8 @@ const LoginForm = () => {
       const username = document.getElementById("user-input").value;
       const password = document.getElementById("password-input").value;
       try {
-        const response = await login({ username, password });
+        await login({ username, password });
+        dispatch(changeUserInfo(username));
         navigateToMain(username);
         return loginResponse;
       } catch (err) {
@@ -87,8 +82,6 @@ const LoginForm = () => {
               </div>
             </div>
           </form>
-          <div>{JSON.stringify(loginResponse)}</div>
-          <div>{JSON.stringify(userInfo)}</div>
         </div>
       </div>
     </div>

@@ -1,8 +1,3 @@
-// TODO:
-// - Copy the auth example from the RTK Query documentation site.
-// - Modify it to submit the POST request to the sign in endpoint.
-// - Make it store the user name in the global state.
-// - Add the get request within the same api, have no idea how to do that.
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
@@ -10,14 +5,6 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const jwtingBackend = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://jwting.herokuapp.com:443",
-    // prepareHeaders: (headers, { getState }) => {
-    //   // By default, if we have a token in the store, let's use that for authenticated requests
-    //   const token = getState().auth.token;
-    //   if (token) {
-    //     headers.set("authorization", `Bearer ${token}`);
-    //   }
-    //   return headers;
-    // },
   }),
   tagTypes: ["UserInfo"],
   endpoints: (builder) => ({
@@ -27,9 +14,8 @@ const jwtingBackend = createApi({
         method: "POST",
         body: credentials,
       }),
-      // Pick out data and prevent nested properties in a hook or selector
-      // transformResponse: (response) => response.unwrap,
       invalidatesTags: ["UserInfo"],
+      // Docs at https://redux-toolkit.js.org/rtk-query/usage/mutations
       // onQueryStarted is useful for optimistic updates
       // The 2nd parameter is the destructured `MutationLifecycleApi`
       async onQueryStarted(
