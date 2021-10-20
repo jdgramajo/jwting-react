@@ -10,7 +10,9 @@ const UserInfo = () => {
 
   return (
     <div>
-      <div className="text-body display-2">Hi {userInfo}! Your roles are:</div>
+      <div className="text-body display-2">
+        Hi {userInfo.name}! Your roles are:
+      </div>
       <ul className="text-body display-3"></ul>
     </div>
   );

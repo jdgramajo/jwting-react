@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 
 import { changeUserInfo } from "../store";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../store";
 
 const LoginForm = () => {
@@ -9,7 +9,7 @@ const LoginForm = () => {
   const history = useHistory();
   const [login, loginResponse] = useLoginMutation();
 
-  const navigateToMain = (username) => {
+  const navigateToMain = () => {
     history.push("/main");
   };
 
@@ -29,8 +29,8 @@ const LoginForm = () => {
       try {
         // Calling unwrap does throw for gte 400 status codes.
         await login({ username, password }).unwrap();
-        dispatch(changeUserInfo(username));
-        navigateToMain(username);
+        dispatch(changeUserInfo({ name: username }));
+        navigateToMain();
         return loginResponse;
       } catch (err) {
         console.log(err);
