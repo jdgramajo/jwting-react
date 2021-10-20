@@ -36,6 +36,9 @@ const jwtingBackend = createApi({
         }
       ) {},
     }),
+    // TODO:
+    // - Add endpoint for getting user roles once logged in.
+    // - Make sure to send credentials in cookie added by a successful login.
   }),
 });
 
@@ -53,6 +56,9 @@ const userInfoSlice = createSlice({
 });
 
 export const { changeUserInfo } = userInfoSlice.actions;
+
+// TODO:
+// - Add definition for a state that stores user roles.
 
 // Global store configuration the store
 export const store = configureStore({
