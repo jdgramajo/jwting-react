@@ -1,12 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import { changeUserInfo } from "../store";
+import { useDispatch } from "react-redux";
+import { useGetMyRolesQuery } from "../store";
+
 const UserInfo = () => {
   // TODO:
   // - Redirect to root directory if not logged in (no userInfo available).
   // - Add logout to the header and actually remove cookie (if possible).
   // - Add change password to the header option and navigate to a new component to do so.
   const { userInfo } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [login, loginResponse] = useLoginMutation();
+
+  const setUserRoles = () => {}
 
   return (
     <div>

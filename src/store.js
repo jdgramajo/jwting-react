@@ -17,9 +17,9 @@ const jwtingBackend = createApi({
       invalidatesTags: ["UserInfo"],
     }),
     // TODO:
-    // - Use this endpoint and make credentials are included.
+    // - Use this endpoint and make sure credentials are included.
     getMyRoles: build.query({
-      query: () => ({ url: "/myRoles" }),
+      query: () => ({ url: "/myRoles", credentials: "include" }),
       invalidatesTags: ["UserInfo"],
     }),
   }),
@@ -33,7 +33,10 @@ const userInfoSlice = createSlice({
   initialState: {},
   reducers: {
     changeUserInfo: (state, action) => {
-      return { ...state, name: action.payload.name };
+      return {
+        name: action.payload.name ?? state.name,
+        roles: action.payload.roles ?? state.roles,
+      };
     },
   },
 });
@@ -46,6 +49,7 @@ export const store = configureStore({
     [jwtingBackend.reducerPath]: jwtingBackend.reducer,
     [userInfoSlice.name]: userInfoSlice.reducer,
   },
+  // https://redux-toolkit.js.org/rtk-query/overview
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
