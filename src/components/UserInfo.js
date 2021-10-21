@@ -1,9 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import { changeUserInfo } from "../store";
-import { useDispatch } from "react-redux";
-import { useGetMyRolesQuery } from "../store";
+import { changeUserInfo, useGetMyRolesQuery } from "../store";
 
 const UserInfo = () => {
   // TODO:
@@ -13,16 +12,19 @@ const UserInfo = () => {
   const { userInfo } = useSelector((store) => store);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [login, loginResponse] = useLoginMutation();
 
-  const setUserRoles = () => {}
+  const { data } = useGetMyRolesQuery();
+  console.log(data);
+  const { roles } = data ?? [];
+  console.log(roles);
+  if (!roles) history.push("/");
+  dispatch(changeUserInfo({ roles }));
 
   return (
     <div>
-      <div className="text-body display-2">
-        Hi {userInfo.name}! Your roles are:
-      </div>
-      <ul className="text-body display-3"></ul>
+      <div className="text-body display-3">Hi {userInfo.name}!</div>
+      <div className="text-body display-5">Your roles are:</div>
+      <ul className="text-body display-6">{roles}</ul>
     </div>
   );
 };

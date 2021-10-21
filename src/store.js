@@ -5,22 +5,26 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const jwtingBackend = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://jwting.herokuapp.com:443",
+    credentials: "include",
   }),
   tagTypes: ["UserInfo"],
   endpoints: (build) => ({
     login: build.mutation({
-      query: (credentials) => ({
+      query: (loginCredentials) => ({
         url: "/auth/signin",
         method: "POST",
-        body: credentials,
+        body: loginCredentials,
+        credentials: "include",
       }),
       invalidatesTags: ["UserInfo"],
     }),
     // TODO:
-    // - Use this endpoint and make sure credentials are included.
+    // - Include credentials in requests, so far adding the field
+    //   in either baseQuery or the endpoint's query is not working.
     getMyRoles: build.query({
-      query: () => ({ url: "/myRoles", credentials: "include" }),
+      query: () => ({ url: "/myRoles" }),
       invalidatesTags: ["UserInfo"],
+      credentials: "include",
     }),
   }),
 });
