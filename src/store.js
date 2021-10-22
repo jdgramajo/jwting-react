@@ -32,26 +32,32 @@ const jwtingBackend = createApi({
 export const { useLoginMutation, useGetMyRolesQuery } = jwtingBackend;
 
 // Redux Toolkit reducer definitions for global non fetch states.
-const userInfoSlice = createSlice({
-  name: "userInfo",
-  initialState: {},
+const userNameSlice = createSlice({
+  name: "userName",
+  initialState: "",
   reducers: {
-    changeUserInfo: (state, action) => {
-      return {
-        name: action.payload.name ?? state.name,
-        roles: action.payload.roles ?? state.roles,
-      };
-    },
+    changeUserName: (state, action) => action.payload,
   },
 });
 
-export const { changeUserInfo } = userInfoSlice.actions;
+export const { changeUserName } = userNameSlice.actions;
+
+const userRolesSlice = createSlice({
+  name: "userRoles",
+  initialState: [],
+  reducers: {
+    changeUserRoles: (state, action) => action.payload,
+  },
+});
+
+export const { changeUserRoles } = userRolesSlice.actions;
 
 // Global store configuration the store
 export const store = configureStore({
   reducer: {
     [jwtingBackend.reducerPath]: jwtingBackend.reducer,
-    [userInfoSlice.name]: userInfoSlice.reducer,
+    [userNameSlice.name]: userNameSlice.reducer,
+    [userRolesSlice.name]: userRolesSlice.reducer,
   },
   // https://redux-toolkit.js.org/rtk-query/overview
   // Adding the api middleware enables caching, invalidation, polling,
