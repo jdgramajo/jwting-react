@@ -14,16 +14,12 @@ const jwtingBackend = createApi({
         url: "/auth/signin",
         method: "POST",
         body: loginCredentials,
-        credentials: "include",
       }),
       invalidatesTags: ["UserInfo"],
     }),
-    // TODO:
-    // - Find out which include is making it work.
     getMyRoles: build.query({
       query: () => ({ url: "/myRoles" }),
       invalidatesTags: ["UserInfo"],
-      credentials: "include",
     }),
   }),
 });
