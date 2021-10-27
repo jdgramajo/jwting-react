@@ -19,8 +19,7 @@ const jwtingBackend = createApi({
       invalidatesTags: ["UserInfo"],
     }),
     // TODO:
-    // - Include credentials in requests, so far adding the field
-    //   in either baseQuery or the endpoint's query is not working.
+    // - Find out which include is making it work.
     getMyRoles: build.query({
       query: () => ({ url: "/myRoles" }),
       invalidatesTags: ["UserInfo"],

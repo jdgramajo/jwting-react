@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -6,22 +7,19 @@ import { changeUserRoles, useGetMyRolesQuery } from "../store";
 
 const UserInfo = () => {
   // TODO:
-  // - Redirect to root directory if not logged in (no userInfo available).
-  // - Add logout to the header and actually remove cookie (if possible).
-  // - Add change password to the header option and navigate to a new component to do so.
-  const { userName } = useSelector((store) => store);
+  // - Research why upon a refresh, redirection to main happens.
+  const { userName, userRoles } = useSelector((store) => store);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // TODO:
-  // - Since the following is working upon a second login (as not at the first),
-  //   there needs to be a way to await getting the roles.
+  if (!userName) history.push("/");
   const { data } = useGetMyRolesQuery();
-  console.log(data);
-  const { roles } = data ?? [];
-  console.log(roles);
-  if (!roles) history.push("/");
-  dispatch(changeUserRoles(roles));
+
+  useEffect(() => {
+    dispatch(changeUserRoles(data?.roles ?? []));
+  }, [data, dispatch]);
+
+  const roles = userRoles.map((role) => <li key={role}>{role}</li>);
 
   return (
     <div>
