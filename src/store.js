@@ -31,28 +31,17 @@ const userNameSlice = createSlice({
   name: "userName",
   initialState: "",
   reducers: {
-    changeUserName: (state, action) => action.payload,
+    setUserName: (state, action) => action.payload,
   },
 });
 
-export const { changeUserName } = userNameSlice.actions;
-
-const userRolesSlice = createSlice({
-  name: "userRoles",
-  initialState: [],
-  reducers: {
-    changeUserRoles: (state, action) => action.payload,
-  },
-});
-
-export const { changeUserRoles } = userRolesSlice.actions;
+export const { setUserName } = userNameSlice.actions;
 
 // Global store configuration the store
 export const store = configureStore({
   reducer: {
     [jwtingBackend.reducerPath]: jwtingBackend.reducer,
     [userNameSlice.name]: userNameSlice.reducer,
-    [userRolesSlice.name]: userRolesSlice.reducer,
   },
   // https://redux-toolkit.js.org/rtk-query/overview
   // Adding the api middleware enables caching, invalidation, polling,
