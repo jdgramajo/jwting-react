@@ -18,6 +18,7 @@ const LoginForm = () => {
 
   const submitCredentialsIfValid = async (event) => {
     event.preventDefault();
+
     const loginForm = document.getElementById("login-form");
 
     if (!loginForm.checkValidity()) {
